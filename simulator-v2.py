@@ -3,22 +3,16 @@
 from datetime import datetime
 import time
 
-import ftplib
-
 def createData(vehicle, latitude, longitude):
     now = datetime.now()
 
     with open("evn.txt", "w") as f:
         f.write("%s %s %f %f %s\n" % (now.strftime("%s"), vehicle, latitude, longitude, end))
         pass
-    
-    ftp = ftplib.FTP("108.167.160.32")
-    ftp.login("roenw@roen.us", "Aikahi16")
-    ftp.cwd("/public_html/wapps/dev/evn")
+
     with open("evn.txt", 'r') as f:
-        ftp.storlines("STOR evn.txt", f)
+        os.system('scp "%s" "%s:%s"' % (f, "roenus0j@az1-ss1.a2hosting.com", "/home/roenus0j/public_html/wapps/dev/evn/") )
         pass
-    ftp.quit()
 
 if __name__ == "__main__":
     sltime=5
