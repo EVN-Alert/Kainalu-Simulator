@@ -2,16 +2,13 @@
 
 from datetime import datetime
 import time
+import os
 
 def createData(vehicle, latitude, longitude):
     now = datetime.now()
 
     with open("evn.txt", "w") as f:
         f.write("%s %s %f %f %s\n" % (now.strftime("%s"), vehicle, latitude, longitude, end))
-        pass
-
-    with open("evn.txt", 'r') as f:
-        os.system('scp "%s" "%s:%s"' % (f, "roenus0j@az1-ss1.a2hosting.com", "/home/roenus0j/public_html/wapps/dev/evn/") )
         pass
 
 if __name__ == "__main__":
@@ -27,6 +24,7 @@ if __name__ == "__main__":
 
     while nbIterations > 0:
         createData(vehicle, latitude, longitude)
+        os.system('scp "%s" "%s" "%s:%s"' % ("-P 7822", "evn.txt", "roenus0j@az1-ss1.a2hosting.com", "/home/roenus0j/public_html/wapps/dev/evn/") )
         latitude += deltaLa
         longitude += deltaLo
         nbIterations -= 1
